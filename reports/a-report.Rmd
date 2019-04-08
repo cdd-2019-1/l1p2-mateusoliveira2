@@ -1,5 +1,7 @@
 ---
-title: "REPLACE ME"
+title: "Analise de atividades de parlamentares no Twitter"
+author: "Mateus de Lima olivera"
+date: "08 de abril de 2019"
 output:
     html_document:
     df_print: paged
@@ -10,8 +12,88 @@ theme: sandstone
 library(tidyverse)
 source(here::here("code/lib.R"))
 theme_set(theme_bw())
+library(ggbeeswarm)
+library(scales)
 ```
 
+
 ```{r read}
-atividade = read_projectdata()
+twitters = read_csv(here::here("data/atividade-por-perfil-20190322.csv"), 
+                  col_types = "ccccccddddddddddddd")
+glimpse(twitters)
+```
+
+
+### 1 - Quais partidos tem mais engajamento por meio de seus parlamentares? 
+*- Os principais partidos representantes de ideias divergentes no Brasil, o PT e o PSL, partidos dos ex-vencedores da eleição presidencial e do atual presidente, respectivamente, são os que se destacam em relação aos demais  partidos. Isso é meio que intuitivo partindo do ponto de vista que os dois foram os partidos mais votados e comentandos nas últimas eleições, em 2018.* 
+
+```{r}
+twitters %>%
+  filter(!is.na(twitter)) %>%
+  group_by(partido) %>%
+  summarise(engajamento = sum(engaj_total)) %>%
+  filter(engajamento > 100000) %>%
+  ggplot(aes(x = partido, y = engajamento, fill = partido))+
+  geom_bar(stat='identity') +
+  coord_flip()
+```
+
+
+
+
+### 1.1 - Dos dois partidos com mais engajamento, quais parlamentares mais se destacam? 
+*- Existem nomes de cada partido no twitter, onde se destacam os do PSL, que tem engajamento popular maior do que os do segundo colocado entre os partidos populares, o PT.*
+
+```{r}
+twitters %>%
+  filter(!is.na(twitter) & ((partido == "PT" | partido == "PSL"))) %>%
+  group_by(nome_eleitoral, partido) %>%
+  summarise(engajamento = sum(engaj_total)) %>%
+  filter(engajamento > 400000) %>%
+  ggplot(aes(x = nome_eleitoral, y = engajamento, fill = partido))+
+  geom_bar(stat='identity') + 
+  coord_flip()
+```
+
+
+
+
+
+
+### 2 - Parlamentares de qual casa são mais presentes na rede social, percentualmente, com base no numero contas no twittes?  
+*- Percentualmente, o número de usuarios do twitter no senado é maior em relação à câmara de deputados.*
+
+```{r}
+percentual_twitter <- function(casa_parlamentar){
+  num_total <- nrow(subset(twitters, casa == casa_parlamentar))
+  num_parlamentares_ativos = nrow(subset(twitters, casa == casa_parlamentar & !is.na(twitter)))
+  
+  return ((num_parlamentares_ativos/num_total)*100)
+}
+
+twitters %>%
+  filter(!is.na(twitter) & seguidores > 0) %>%
+  group_by(casa) %>%
+  summarise(percentual = percentual_twitter(casa)) %>%
+  ggplot(aes(x=casa, y=percentual, fill=casa)) + 
+  geom_bar(stat="identity")+
+  labs(
+        title="Percentual por casa", x="casa", y="percentual") +
+  theme_bw()
+```
+
+
+
+
+### 2.1 -  Será que a maior presença de senadores, percentualmente, representa maior engajamento, necessariamente?
+*- Pode-se verirficar que o engajamento por parte dos deputados é bem maior em relação aos senadores, onde mesmo que em quantidade um pouco menor em numero de contas pelos parlamentares, os deputados são bem mais ativos em suas contas.*
+
+```{r}
+twitters %>%
+  filter(!is.na(twitter) & seguidores > 0) %>%
+  group_by(casa) %>%
+  summarise(engajamento = sum(engaj_total)) %>%
+  ggplot(aes(x=casa, y=engajamento, fill=casa)) +
+  geom_bar(stat="identity")
+  
 ```
