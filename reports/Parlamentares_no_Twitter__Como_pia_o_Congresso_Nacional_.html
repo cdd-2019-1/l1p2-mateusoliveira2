@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Iann Carvalho Barbosa, Mateus de Lima Oliveira e Matheus Alves dos Santos" />
+
+
+<title>Parlamentares no Twitter: Como pia o Congresso Nacional?</title>
+
+<script src="Parlamentares_no_Twitter__Como_pia_o_Congresso_Nacional__files/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="Parlamentares_no_Twitter__Como_pia_o_Congresso_Nacional__files/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="Parlamentares_no_Twitter__Como_pia_o_Congresso_Nacional__files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="Parlamentares_no_Twitter__Como_pia_o_Congresso_Nacional__files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="Parlamentares_no_Twitter__Como_pia_o_Congresso_Nacional__files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="Parlamentares_no_Twitter__Como_pia_o_Congresso_Nacional__files/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="Parlamentares_no_Twitter__Como_pia_o_Congresso_Nacional__files/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="Parlamentares_no_Twitter__Como_pia_o_Congresso_Nacional__files/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="Parlamentares_no_Twitter__Como_pia_o_Congresso_Nacional__files/navigation-1.1/tabsets.js"></script>
+<link href="Parlamentares_no_Twitter__Como_pia_o_Congresso_Nacional__files/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="Parlamentares_no_Twitter__Como_pia_o_Congresso_Nacional__files/highlightjs-9.12.0/highlight.js"></script>
+<script src="Parlamentares_no_Twitter__Como_pia_o_Congresso_Nacional__files/htmlwidgets-1.3/htmlwidgets.js"></script>
+<script src="Parlamentares_no_Twitter__Como_pia_o_Congresso_Nacional__files/plotly-binding-4.9.0/plotly.js"></script>
+<script src="Parlamentares_no_Twitter__Como_pia_o_Congresso_Nacional__files/typedarray-0.1/typedarray.min.js"></script>
+<link href="Parlamentares_no_Twitter__Como_pia_o_Congresso_Nacional__files/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="Parlamentares_no_Twitter__Como_pia_o_Congresso_Nacional__files/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+<link href="Parlamentares_no_Twitter__Como_pia_o_Congresso_Nacional__files/plotly-htmlwidgets-css-1.46.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="Parlamentares_no_Twitter__Como_pia_o_Congresso_Nacional__files/plotly-main-1.46.1/plotly-latest.min.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="r-markdown.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3,h4,h5",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = false;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+.tocify-subheader {
+  display: inline;
+}
+.tocify-subheader .tocify-item {
+  font-size: 0.95em;
+}
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Parlamentares no Twitter: Como pia o Congresso Nacional?</h1>
+<h4 class="author">Iann Carvalho Barbosa, Mateus de Lima Oliveira e Matheus Alves dos Santos</h4>
+<h4 class="date">04 de abril de 2019</h4>
+
+</div>
+
+
+<p>Na maioria dos países democráticos, os parlamentares costumam adotar perfis em redes sociais como canais de comunicação não-oficiais, através dos quais podem não somente divulgar sua atuação política, mas também comentar assuntos cotidianos e entrar em contato direto da população em geral.</p>
+<p>O Twitter tem atraído bastante a atenção dos brasileiros nos últimos meses e, muitas vezes, isso não se deve às suas funcionalidades, mas às polêmicas geradas a partir de postagens de figuras políticas do país. Nesse sentido, decidiu-se explorar os dados de nossos parlamentares <em>twitteiros</em> na tentativa de compreender melhor como <em>tweeta</em> o Congresso Nacional brasileiro.</p>
+<div id="preparacao-do-ambiente" class="section level2">
+<h2>Preparação do Ambiente</h2>
+<p>Para as análises apresentadas a seguir, foram utilizadas as bibliotecas <strong>tidyverse</strong>, <strong>ggplot2</strong>, <strong>ggbeeswarm</strong> e <strong>plotly</strong>. Já os dados utilizados estão estruturados da seguinte maneira:</p>
+<pre class="r"><code>glimpse(atividade)</code></pre>
+<pre><code>## Observations: 608
+## Variables: 19
+## $ id_parlamentar        &lt;chr&gt; &quot;204554&quot;, &quot;204521&quot;, &quot;204379&quot;, &quot;204560&quot;, ...
+## $ casa                  &lt;chr&gt; &quot;câmara&quot;, &quot;câmara&quot;, &quot;câmara&quot;, &quot;câmara&quot;, ...
+## $ nome_eleitoral        &lt;chr&gt; &quot;ABÍLIO SANTANA&quot;, &quot;ABOU ANNI&quot;, &quot;ACÁCIO F...
+## $ partido               &lt;chr&gt; &quot;PR&quot;, &quot;PSL&quot;, &quot;PROS&quot;, &quot;PSDB&quot;, &quot;NOVO&quot;, &quot;PP...
+## $ UF                    &lt;chr&gt; &quot;BA&quot;, &quot;SP&quot;, &quot;AP&quot;, &quot;BA&quot;, &quot;SP&quot;, &quot;GO&quot;, &quot;MG&quot;...
+## $ twitter               &lt;chr&gt; &quot;AbilioSantana_&quot;, &quot;abouannipv&quot;, &quot;Favacho...
+## $ seguidores            &lt;dbl&gt; NA, NA, NA, NA, 4652, NA, NA, NA, NA, NA...
+## $ segue                 &lt;dbl&gt; NA, NA, NA, NA, 315, NA, NA, NA, NA, NA,...
+## $ n_proprio             &lt;dbl&gt; 0, 0, 0, 0, 99, 0, 0, 0, 0, 0, 0, 0, NA,...
+## $ n_retweet             &lt;dbl&gt; 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, NA, ...
+## $ engaj_total           &lt;dbl&gt; 0, 0, 0, 0, 7090, 0, 0, 0, 0, 0, 0, 0, N...
+## $ engaj_total_proprio   &lt;dbl&gt; 0, 0, 0, 0, 6701, 0, 0, 0, 0, 0, 0, 0, N...
+## $ engaj_total_retweet   &lt;dbl&gt; 0, 0, 0, 0, 389, 0, 0, 0, 0, 0, 0, 0, NA...
+## $ engaj_mediano         &lt;dbl&gt; 0.0, 0.0, 0.0, 0.0, 26.5, 0.0, 0.0, 0.0,...
+## $ engaj_mediano_proprio &lt;dbl&gt; 0.0, 0.0, 0.0, 0.0, 22.5, 0.0, 0.0, 0.0,...
+## $ engaj_mediano_retweet &lt;dbl&gt; 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ...
+## $ engaj_max             &lt;dbl&gt; 0, 0, 0, 0, 1031, 0, 0, 0, 0, 0, 0, 0, N...
+## $ engaj_max_proprio     &lt;dbl&gt; 0, 0, 0, 0, 1031, 0, 0, 0, 0, 0, 0, 0, N...
+## $ engaj_max_retweet     &lt;dbl&gt; 0, 0, 0, 0, 99, 0, 0, 0, 0, 0, 0, 0, NA,...</code></pre>
+</div>
+<div id="analises" class="section level2">
+<h2>Análises</h2>
+<div id="quais-partidos-mais-produzem-conteudo-no-twitter" class="section level3">
+<h3>1 — Quais partidos mais produzem conteúdo no Twitter?</h3>
+<p>Para contabilizar o conteúdo produzido no Twitter será utilizada a soma do número de tweets e retweets de cada parlamentar. Considerando que o número de parlamentares eleitos por partido varia muito, será utilizada a mediana da soma (com agrupamento por partido) citada anteriormente. Por fim, não serão analisados parlamentares sem partido.</p>
+<pre class="r"><code>parlamentares_com_tt &lt;- atividade %&gt;% filter(!is.na(twitter))
+parlamentares_com_tt &lt;- parlamentares_com_tt %&gt;% filter(partido != &quot;S/Partido&quot;)
+parlamentares_com_tt &lt;- parlamentares_com_tt %&gt;% mutate(total_tweets = n_proprio + n_retweet)
+parlamentares_com_tt &lt;- parlamentares_com_tt %&gt;% mutate(casa = if_else(casa == &#39;senado&#39;, &#39;Senado&#39;, &#39;Câmara&#39;))
+
+centro &lt;- c(&quot;AVANTE&quot;, &quot;MDB&quot;, &quot;PSD&quot;, &quot;PSDB&quot;, &quot;PTB&quot;, &quot;SOLIDARIEDADE&quot;)
+esquerda &lt;- c(&quot;PCdoB&quot;, &quot;PDT&quot;, &quot;PMN&quot;, &quot;PPL&quot;, &quot;PPS&quot;, &quot;PROS&quot;, &quot;PSB&quot;, &quot;PSOL&quot;, &quot;PT&quot;, &quot;PV&quot;, &quot;REDE&quot;)
+direita &lt;- c(&quot;DC&quot;, &quot;DEM&quot;, &quot;NOVO&quot;, &quot;PATRI&quot;, &quot;PHS&quot;, &quot;PODE&quot;, &quot;PP&quot;, &quot;PR&quot;, &quot;PRB&quot;, &quot;PRP&quot;,  &quot;PSC&quot;, &quot;PSL&quot;)
+
+dados1 &lt;- parlamentares_com_tt %&gt;%
+  group_by(partido) %&gt;%
+  summarise(conteudo_produzido = median(total_tweets, na.rm = TRUE),
+            median_retweet = median(n_retweet, na.rm = TRUE),
+            median_proprio = median(n_proprio, na.rm = TRUE)
+            ) %&gt;%
+  mutate(posicionamento = case_when(
+    partido %in% centro ~ &quot;Centro&quot;,
+    partido %in% esquerda ~ &quot;Esquerda&quot;,
+    partido %in% direita ~ &quot;Direita&quot;,
+    TRUE ~ NA_character_)
+  )
+
+plot1 &lt;- dados1 %&gt;%
+  ggplot(aes(x= reorder(partido, conteudo_produzido), y= conteudo_produzido, fill = posicionamento, alpha = .4,
+             text = paste(&quot;Partido:&quot;, partido, &quot;&lt;br&gt;Mediana de tweets:&quot;, median_proprio, &quot;&lt;br&gt;Mediana de retweets:&quot;, median_retweet))) +
+  geom_col(show.legend = FALSE) +
+  labs(x = &#39;Partido&#39;, y = &#39;Mediana do número de tweets de 2019&#39;, title = &#39;Conteúdo produzido por Parlamentar&#39;) +
+  scale_fill_manual(values = c(&quot;slateblue1&quot;, &quot;steelblue1&quot;, &quot;firebrick&quot;)) +
+  coord_flip()
+
+ggplotly(plot1, tooltip = c(&quot;text&quot;))</code></pre>
+<div id="htmlwidget-b7a2e413ef3d3b32a400" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b7a2e413ef3d3b32a400">{"x":{"data":[{"orientation":"h","width":[0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999],"base":[0,0,0,0,0,0],"x":[0,17,17,18,32,35],"y":[1,11,12,14,16,18],"text":["Partido: AVANTE <br>Mediana de tweets: 0 <br>Mediana de retweets: 0","Partido: MDB <br>Mediana de tweets: 15 <br>Mediana de retweets: 0","Partido: PSDB <br>Mediana de tweets: 15 <br>Mediana de retweets: 2","Partido: SOLIDARIEDADE <br>Mediana de tweets: 18 <br>Mediana de retweets: 0","Partido: PTB <br>Mediana de tweets: 31 <br>Mediana de retweets: 5","Partido: PSD <br>Mediana de tweets: 32 <br>Mediana de retweets: 2"],"type":"bar","marker":{"autocolorscale":false,"color":"rgba(131,111,255,0.55)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"Centro","legendgroup":"Centro","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"h","width":[0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999],"base":[0,0,0,0,0,0,0,0,0,0,0,0],"x":[0,0,5,13,15.5,17.5,19,40,60,79.5,140,199],"y":[2,4,5,8,10,13,15,19,21,22,25,27],"text":["Partido: DC <br>Mediana de tweets: 0 <br>Mediana de retweets: 0","Partido: PR <br>Mediana de tweets: 0 <br>Mediana de retweets: 0","Partido: PP <br>Mediana de tweets: 4.5 <br>Mediana de retweets: 0","Partido: DEM <br>Mediana de tweets: 8 <br>Mediana de retweets: 0","Partido: PATRI <br>Mediana de tweets: 15.5 <br>Mediana de retweets: 0","Partido: PSC <br>Mediana de tweets: 17.5 <br>Mediana de retweets: 0","Partido: PRP <br>Mediana de tweets: 18 <br>Mediana de retweets: 1","Partido: PRB <br>Mediana de tweets: 39 <br>Mediana de retweets: 1","Partido: PSL <br>Mediana de tweets: 43.5 <br>Mediana de retweets: 5","Partido: PHS <br>Mediana de tweets: 71 <br>Mediana de retweets: 8.5","Partido: PODE <br>Mediana de tweets: 137 <br>Mediana de retweets: 6","Partido: NOVO <br>Mediana de tweets: 150.5 <br>Mediana de retweets: 54.5"],"type":"bar","marker":{"autocolorscale":false,"color":"rgba(99,184,255,0.55)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"Direita","legendgroup":"Direita","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"h","width":[0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999],"base":[0,0,0,0,0,0,0,0,0,0,0],"x":[0,8,10,14,34,40,95,119,164,283,505],"y":[3,6,7,9,17,20,23,24,26,28,29],"text":["Partido: PPL <br>Mediana de tweets: 0 <br>Mediana de retweets: 0","Partido: PMN <br>Mediana de tweets: 8 <br>Mediana de retweets: 0","Partido: PV <br>Mediana de tweets: 9 <br>Mediana de retweets: 0","Partido: PDT <br>Mediana de tweets: 7 <br>Mediana de retweets: 1","Partido: PROS <br>Mediana de tweets: 34 <br>Mediana de retweets: 0","Partido: PSB <br>Mediana de tweets: 35 <br>Mediana de retweets: 6","Partido: PPS <br>Mediana de tweets: 91 <br>Mediana de retweets: 0","Partido: REDE <br>Mediana de tweets: 114.5 <br>Mediana de retweets: 4.5","Partido: PT <br>Mediana de tweets: 125.5 <br>Mediana de retweets: 15","Partido: PCdoB <br>Mediana de tweets: 190 <br>Mediana de retweets: 57","Partido: PSOL <br>Mediana de tweets: 319 <br>Mediana de retweets: 101"],"type":"bar","marker":{"autocolorscale":false,"color":"rgba(178,34,34,0.55)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"Esquerda","legendgroup":"Esquerda","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":43.7625570776256,"r":7.30593607305936,"b":40.1826484018265,"l":101.552511415525},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":{"text":"Conteúdo produzido por Parlamentar","font":{"color":"rgba(0,0,0,1)","family":"","size":17.5342465753425},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-25.25,530.25],"tickmode":"array","ticktext":["0","100","200","300","400","500"],"tickvals":[0,100,200,300,400,500],"categoryorder":"array","categoryarray":["0","100","200","300","400","500"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":{"text":"Mediana do número de tweets de 2019","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.4,29.6],"tickmode":"array","ticktext":["AVANTE","DC","PPL","PR","PP","PMN","PV","DEM","PDT","PATRI","MDB","PSDB","PSC","SOLIDARIEDADE","PRP","PTB","PROS","PSD","PRB","PSB","PSL","PHS","PPS","REDE","PODE","PT","NOVO","PCdoB","PSOL"],"tickvals":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29],"categoryorder":"array","categoryarray":["AVANTE","DC","PPL","PR","PP","PMN","PV","DEM","PDT","PATRI","MDB","PSDB","PSC","SOLIDARIEDADE","PRP","PTB","PROS","PSD","PRB","PSB","PSL","PHS","PPS","REDE","PODE","PT","NOVO","PCdoB","PSOL"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":{"text":"Partido","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"y":1},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","showSendToCloud":false},"source":"A","attrs":{"db079fd58e3":{"x":{},"y":{},"fill":{},"alpha":{},"text":{},"type":"bar"}},"cur_data":"db079fd58e3","visdat":{"db079fd58e3":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<p>Conforme o gráfico de barras acima, os partidos mais <em>twitteiros</em> do Brasil são o <strong>PSOL</strong>, o <strong>PCdoB</strong> e o <strong>NOVO</strong>. É interessante notar que os partidos com mais parlamentares eleitos (PSL e PT) não figuram entre as primeiras posições e que a mediana de tweets do PSOL se aproxima do dobro da mediana do 2º colocado. Ainda, descobriu-se alguns partidos (PR, PPL, DC e AVANTE) em que todos os parlamentares eleitos que tem uma conta no <em>Twitter</em> são ou estão inativos nessa rede social.</p>
+</div>
+<div id="e-quais-sao-os-partidos-mais-populares-do-twitter" class="section level3">
+<h3>2 — E quais são os partidos mais populares do Twitter?</h3>
+<p>Diante do questionamento anterior, mostrou-se relevante definir a popularidade dos partidos políticos para tentar explicar o motivo de alguns deles produzirem uma quantidade tão superior de conteúdo em relação aos seus pares. Visando avaliar essa popularidade, decidiu-se utilizar a diferença entre os números de perfis seguidos e perfis seguidores de cada partido e, para isso, a mediana foi novamente a métrica principal.</p>
+<pre class="r"><code>dados_seguidores &lt;- parlamentares_com_tt %&gt;%
+  group_by(partido) %&gt;%
+  summarise(n = median(seguidores, na.rm = TRUE), tipo = &quot;Seguidores&quot;)
+
+dados_segue &lt;- parlamentares_com_tt %&gt;%
+  group_by(partido) %&gt;%
+  summarise(n = median(segue, na.rm = TRUE), tipo = &quot;Segue&quot;)
+
+dados2 &lt;- rbind(dados_seguidores, dados_segue) %&gt;% filter(!is.na(n))
+
+plot2 &lt;- dados2 %&gt;%
+  ggplot(mapping = aes(x = reorder(partido, n), y = n, color = tipo, alpha = .4,
+                       text = paste (&quot;Tipo:&quot;, tipo, &quot;&lt;br&gt;Partido:&quot;, partido, &quot;&lt;br&gt;Quantidade:&quot;, n))) +
+  geom_point(show.legend = FALSE) +
+  labs(x = &quot;Partido&quot;, y = &quot;Número de Seguidores/Seguindo&quot;, title = &quot;Popularidade dos partidos políticos no Twitter&quot;) +
+  scale_y_log10() +
+  coord_flip()
+
+ggplotly(plot2, tooltip = c(&quot;text&quot;))</code></pre>
+<div id="htmlwidget-defa3301b8c7ef268508" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-defa3301b8c7ef268508">{"x":{"data":[{"x":[1.60745502321467,2.67897337591977,2.77887447200274,2.60476588470389,1.87794695162919,2.62991903550354,2.70070371714502,2.28103336724773,1.27875360095283,2.22788670461367,2.56229286445647,2.32735893438633,2.3747483460101,2.50174372962799,2.57634135020579,1.92941892571429,2.98091193777684,2.51321760006794,2.86717275117865,2.76004532796581,2.4814426285023,2.85339397745067,2.9982593384237,2.38560627359831,2.89292898235521,1.44715803134222,2.33645973384853],"y":[6,17,14,23,2,26,22,10,1,15,12,24,11,7,16,5,21,3,18,19,20,27,25,4,13,9,8],"text":["Tipo: Segue <br>Partido: AVANTE <br>Quantidade: 40.5","Tipo: Segue <br>Partido: DEM <br>Quantidade: 477.5","Tipo: Segue <br>Partido: MDB <br>Quantidade: 601","Tipo: Segue <br>Partido: NOVO <br>Quantidade: 402.5","Tipo: Segue <br>Partido: PATRI <br>Quantidade: 75.5","Tipo: Segue <br>Partido: PCdoB <br>Quantidade: 426.5","Tipo: Segue <br>Partido: PDT <br>Quantidade: 502","Tipo: Segue <br>Partido: PHS <br>Quantidade: 191","Tipo: Segue <br>Partido: PMN <br>Quantidade: 19","Tipo: Segue <br>Partido: PODE <br>Quantidade: 169","Tipo: Segue <br>Partido: PP <br>Quantidade: 365","Tipo: Segue <br>Partido: PPS <br>Quantidade: 212.5","Tipo: Segue <br>Partido: PR <br>Quantidade: 237","Tipo: Segue <br>Partido: PRB <br>Quantidade: 317.5","Tipo: Segue <br>Partido: PROS <br>Quantidade: 377","Tipo: Segue <br>Partido: PRP <br>Quantidade: 85","Tipo: Segue <br>Partido: PSB <br>Quantidade: 957","Tipo: Segue <br>Partido: PSC <br>Quantidade: 326","Tipo: Segue <br>Partido: PSD <br>Quantidade: 736.5","Tipo: Segue <br>Partido: PSDB <br>Quantidade: 575.5","Tipo: Segue <br>Partido: PSL <br>Quantidade: 303","Tipo: Segue <br>Partido: PSOL <br>Quantidade: 713.5","Tipo: Segue <br>Partido: PT <br>Quantidade: 996","Tipo: Segue <br>Partido: PTB <br>Quantidade: 243","Tipo: Segue <br>Partido: PV <br>Quantidade: 781.5","Tipo: Segue <br>Partido: REDE <br>Quantidade: 28","Tipo: Segue <br>Partido: SOLIDARIEDADE <br>Quantidade: 217"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(248,118,109,1)","opacity":0.55,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"Segue","legendgroup":"Segue","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[3.12352498094273,3.6575816621009,3.49948088123039,3.92363253317705,1.90848501887865,4.17121435700949,3.89326228588799,3.40543174196737,2.05690485133647,3.56229286445647,3.40807028588719,3.9373925002215,3.39967372148104,3.17187265613968,3.6093275616089,2.98587535730839,3.76871208037766,2.6159500516564,3.66407759018507,3.68160299873087,3.73367865567709,4.79189406728572,3.99211148778695,2.88536122003151,3.4345689040342,3.34478512263266,3.28869626059026],"y":[6,17,14,23,2,26,22,10,1,15,12,24,11,7,16,5,21,3,18,19,20,27,25,4,13,9,8],"text":["Tipo: Seguidores <br>Partido: AVANTE <br>Quantidade: 1329","Tipo: Seguidores <br>Partido: DEM <br>Quantidade: 4545.5","Tipo: Seguidores <br>Partido: MDB <br>Quantidade: 3158.5","Tipo: Seguidores <br>Partido: NOVO <br>Quantidade: 8387.5","Tipo: Seguidores <br>Partido: PATRI <br>Quantidade: 81","Tipo: Seguidores <br>Partido: PCdoB <br>Quantidade: 14832.5","Tipo: Seguidores <br>Partido: PDT <br>Quantidade: 7821","Tipo: Seguidores <br>Partido: PHS <br>Quantidade: 2543.5","Tipo: Seguidores <br>Partido: PMN <br>Quantidade: 114","Tipo: Seguidores <br>Partido: PODE <br>Quantidade: 3650","Tipo: Seguidores <br>Partido: PP <br>Quantidade: 2559","Tipo: Seguidores <br>Partido: PPS <br>Quantidade: 8657.5","Tipo: Seguidores <br>Partido: PR <br>Quantidade: 2510","Tipo: Seguidores <br>Partido: PRB <br>Quantidade: 1485.5","Tipo: Seguidores <br>Partido: PROS <br>Quantidade: 4067.5","Tipo: Seguidores <br>Partido: PRP <br>Quantidade: 968","Tipo: Seguidores <br>Partido: PSB <br>Quantidade: 5871","Tipo: Seguidores <br>Partido: PSC <br>Quantidade: 413","Tipo: Seguidores <br>Partido: PSD <br>Quantidade: 4614","Tipo: Seguidores <br>Partido: PSDB <br>Quantidade: 4804","Tipo: Seguidores <br>Partido: PSL <br>Quantidade: 5416","Tipo: Seguidores <br>Partido: PSOL <br>Quantidade: 61929","Tipo: Seguidores <br>Partido: PT <br>Quantidade: 9820","Tipo: Seguidores <br>Partido: PTB <br>Quantidade: 768","Tipo: Seguidores <br>Partido: PV <br>Quantidade: 2720","Tipo: Seguidores <br>Partido: REDE <br>Quantidade: 2212","Tipo: Seguidores <br>Partido: SOLIDARIEDADE <br>Quantidade: 1944"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,191,196,1)","opacity":0.55,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"Seguidores","legendgroup":"Seguidores","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":43.7625570776256,"r":7.30593607305936,"b":40.1826484018265,"l":101.552511415525},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":{"text":"Popularidade dos partidos políticos no Twitter","font":{"color":"rgba(0,0,0,1)","family":"","size":17.5342465753425},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[1.10309657763618,4.96755109060236],"tickmode":"array","ticktext":["100","1000","10000"],"tickvals":[2,3,4],"categoryorder":"array","categoryarray":["100","1000","10000"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":{"text":"Número de Seguidores/Seguindo","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.4,27.6],"tickmode":"array","ticktext":["PMN","PATRI","PSC","PTB","PRP","AVANTE","PRB","SOLIDARIEDADE","REDE","PHS","PR","PP","PV","MDB","PODE","PROS","DEM","PSD","PSDB","PSL","PSB","PDT","NOVO","PPS","PT","PCdoB","PSOL"],"tickvals":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27],"categoryorder":"array","categoryarray":["PMN","PATRI","PSC","PTB","PRP","AVANTE","PRB","SOLIDARIEDADE","REDE","PHS","PR","PP","PV","MDB","PODE","PROS","DEM","PSD","PSDB","PSL","PSB","PDT","NOVO","PPS","PT","PCdoB","PSOL"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":{"text":"Partido","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"y":1},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","showSendToCloud":false},"source":"A","attrs":{"db0d434b3c":{"x":{},"y":{},"colour":{},"alpha":{},"text":{},"type":"scatter"}},"cur_data":"db0d434b3c","visdat":{"db0d434b3c":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<p>É notável que os partidos que seguem mais pessoas não são, necessariamente, aqueles com mais seguidores, fato que é explicitado pela diferença de comportamento entre os pontos <em>Seguidores</em> e <em>Segue</em> do gráfico acima. O <strong>PSOL</strong> mais uma vez apresenta a liderança isolada entre os partidos políticos, de modo que a quantidade de conteúdo produzido por seus parlamentares torna-se muito mais compreensível dada a quantidade de eleitores que os seguem no Twitter. Por fim, ainda em comparação com a análise anterior, é interessante perceber que os partidos cujos parlamentares não produziram nenhum conteúdo em 2019 não são aqueles com menos seguidores.</p>
+</div>
+<div id="qual-a-casa-e-quais-os-parlamentares-mais-ativos-no-twitter" class="section level3">
+<h3>3 — Qual a casa e quais os parlamentares mais ativos no Twitter?</h3>
+<p>Para determinar qual das casas do Congresso Nacional e quais os parlamentares mais ativos no Twitter, será utilizada a soma do número de tweets e retweets de cada parlamentar, agrupando-os pela casa a que pertencem. Considerando a diferença do número de eleitos em cada casa (513 deputados e 81 senadores), adotou-se a mediana dessa soma como métrica principal, representada como pontos pretos no gráfico abaixo.</p>
+<pre class="r"><code>parlamentares_com_tt %&gt;%
+  ggplot(aes(x = casa, y = total_tweets, color = casa)) + 
+  geom_quasirandom(aes(alpha = .4), show.legend = FALSE) +
+  stat_summary(geom = &quot;point&quot;, fun.y = &quot;median&quot;, size = 2, color = &#39;black&#39;, alpha = .7) +
+  labs(x = &quot;Casa do Congresso Nacional&quot;, y = &quot;Número de tweets em 2019&quot;, title = &quot;Conteúdo produzido por casa do Congresso Nacional&quot;) +
+  scale_y_continuous(trans = &quot;sqrt&quot;)</code></pre>
+<p><img src="Parlamentares_no_Twitter__Como_pia_o_Congresso_Nacional__files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>É perceptível que o Senado atingiu uma mediana consideravelmente superior à Câmara, trazendo a conclusão que esta é, proporcionalmente, a casa mais <em>twitteira</em> do Congresso Nacional brasileiro. Além disso, também é possível notar a existência de uma grande quantidade de deputados inativos em suas contas do Twitter, enquanto entre os senadores isso acontece bem menos. Em contrapartida, em ambas as casas é possível identificar um seleto número de parlamentares que produzem muito mais conteúdo que os seus pares e, para melhor entendimento desse comportamento, optou-se por gerar um novo gráfico.</p>
+<pre class="r"><code>top10_camara &lt;- parlamentares_com_tt %&gt;%
+          mutate(conteudo_produzido = n_retweet + n_proprio, na.rm = TRUE) %&gt;%
+          filter(casa == &quot;Câmara&quot;) %&gt;%
+          top_n(10, conteudo_produzido)
+
+top10_senado &lt;- parlamentares_com_tt %&gt;%
+          mutate(conteudo_produzido = n_retweet + n_proprio, na.rm = TRUE) %&gt;%
+          filter(casa == &quot;Senado&quot;) %&gt;%
+          top_n(10, conteudo_produzido)
+
+plot_camara &lt;- top10_camara %&gt;% 
+  ggplot(aes(x = reorder(nome_eleitoral, conteudo_produzido), y = conteudo_produzido, fill = nome_eleitoral, alpha = .4,
+             text = paste(&quot;Casa:&quot;, casa, &quot;&lt;br&gt;Número de tweets:&quot;, n_proprio, &quot;&lt;br&gt;Número de retweets:&quot;, n_retweet))) +
+        geom_col(show.legend = FALSE) +
+        scale_fill_brewer(palette = &quot;Set3&quot;) +
+        coord_flip()
+
+plot_senado &lt;- top10_senado %&gt;% 
+  ggplot(aes(x = reorder(nome_eleitoral, conteudo_produzido), y = conteudo_produzido, fill = nome_eleitoral, alpha = .4,
+             text = paste(&quot;Casa:&quot;, casa, &quot;&lt;br&gt;Número de tweets:&quot;, n_proprio, &quot;&lt;br&gt;Número de retweets:&quot;, n_retweet))) +
+        geom_col(show.legend = FALSE) +
+        scale_fill_brewer(palette = &quot;Set3&quot;) +
+        coord_flip()
+          
+subplot(ggplotly(plot_camara, tooltip = c(&quot;text&quot;)), ggplotly(plot_senado, tooltip = c(&quot;text&quot;)), nrows = 2)</code></pre>
+<div id="htmlwidget-cfc2a0214e8a28fdd7ad" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-cfc2a0214e8a28fdd7ad">{"x":{"data":[{"orientation":"h","width":0.9,"base":0,"x":[999],"y":[4],"text":"Casa: Câmara <br>Número de tweets: 830 <br>Número de retweets: 169","type":"bar","marker":{"autocolorscale":false,"color":"rgba(141,211,199,0.55)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"ALEXANDRE FROTA","legendgroup":"ALEXANDRE FROTA","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"h","width":0.899999999999999,"base":0,"x":[2000],"y":[10],"text":"Casa: Câmara <br>Número de tweets: 1682 <br>Número de retweets: 318","type":"bar","marker":{"autocolorscale":false,"color":"rgba(255,255,179,0.55)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"BACELAR","legendgroup":"BACELAR","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"h","width":0.9,"base":0,"x":[993],"y":[2],"text":"Casa: Câmara <br>Número de tweets: 368 <br>Número de retweets: 625","type":"bar","marker":{"autocolorscale":false,"color":"rgba(190,186,218,0.55)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"BIA KICIS","legendgroup":"BIA KICIS","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"h","width":0.9,"base":0,"x":[999],"y":[5],"text":"Casa: Câmara <br>Número de tweets: 776 <br>Número de retweets: 223","type":"bar","marker":{"autocolorscale":false,"color":"rgba(251,128,114,0.55)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"CARLA ZAMBELLI","legendgroup":"CARLA ZAMBELLI","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"h","width":0.9,"base":0,"x":[999],"y":[6],"text":"Casa: Câmara <br>Número de tweets: 708 <br>Número de retweets: 291","type":"bar","marker":{"autocolorscale":false,"color":"rgba(128,177,211,0.55)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"JOSÉ GUIMARÃES","legendgroup":"JOSÉ GUIMARÃES","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"h","width":0.9,"base":0,"x":[999],"y":[7],"text":"Casa: Câmara <br>Número de tweets: 556 <br>Número de retweets: 443","type":"bar","marker":{"autocolorscale":false,"color":"rgba(253,180,98,0.55)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"JOSÉ MEDEIROS","legendgroup":"JOSÉ MEDEIROS","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"h","width":0.9,"base":0,"x":[998],"y":[3],"text":"Casa: Câmara <br>Número de tweets: 897 <br>Número de retweets: 101","type":"bar","marker":{"autocolorscale":false,"color":"rgba(179,222,105,0.55)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"MARCELO FREIXO","legendgroup":"MARCELO FREIXO","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"h","width":0.899999999999999,"base":0,"x":[1000],"y":[8],"text":"Casa: Câmara <br>Número de tweets: 527 <br>Número de retweets: 473","type":"bar","marker":{"autocolorscale":false,"color":"rgba(252,205,229,0.55)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"MÁRCIO JERRY","legendgroup":"MÁRCIO JERRY","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"h","width":0.899999999999999,"base":0,"x":[1000],"y":[9],"text":"Casa: Câmara <br>Número de tweets: 948 <br>Número de retweets: 52","type":"bar","marker":{"autocolorscale":false,"color":"rgba(217,217,217,0.55)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"MARGARIDA SALOMÃO","legendgroup":"MARGARIDA SALOMÃO","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"h","width":0.9,"base":0,"x":[861],"y":[1],"text":"Casa: Câmara <br>Número de tweets: 598 <br>Número de retweets: 263","type":"bar","marker":{"autocolorscale":false,"color":"rgba(188,128,189,0.55)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"ROGÉRIO CORREIA","legendgroup":"ROGÉRIO CORREIA","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"h","width":0.899999999999999,"base":0,"x":[1000],"y":[9],"text":"Casa: Senado <br>Número de tweets: 878 <br>Número de retweets: 122","type":"bar","marker":{"autocolorscale":false,"color":"rgba(141,211,199,0.55)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"ALVARO DIAS","legendgroup":"ALVARO DIAS","showlegend":true,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"h","width":0.9,"base":0,"x":[335],"y":[3],"text":"Casa: Senado <br>Número de tweets: 265 <br>Número de retweets: 70","type":"bar","marker":{"autocolorscale":false,"color":"rgba(255,255,179,0.55)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"CARLOS VIANA","legendgroup":"CARLOS VIANA","showlegend":true,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"h","width":0.899999999999999,"base":0,"x":[1000],"y":[10],"text":"Casa: Senado <br>Número de tweets: 846 <br>Número de retweets: 154","type":"bar","marker":{"autocolorscale":false,"color":"rgba(190,186,218,0.55)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"HUMBERTO COSTA","legendgroup":"HUMBERTO COSTA","showlegend":true,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"h","width":0.899999999999999,"base":0,"x":[993],"y":[8],"text":"Casa: Senado <br>Número de tweets: 666 <br>Número de retweets: 327","type":"bar","marker":{"autocolorscale":false,"color":"rgba(251,128,114,0.55)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"JORGE KAJURU","legendgroup":"JORGE KAJURU","showlegend":true,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"h","width":0.9,"base":0,"x":[769],"y":[7],"text":"Casa: Senado <br>Número de tweets: 723 <br>Número de retweets: 46","type":"bar","marker":{"autocolorscale":false,"color":"rgba(128,177,211,0.55)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"LASIER MARTINS","legendgroup":"LASIER MARTINS","showlegend":true,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"h","width":0.9,"base":0,"x":[313],"y":[1],"text":"Casa: Senado <br>Número de tweets: 310 <br>Número de retweets: 3","type":"bar","marker":{"autocolorscale":false,"color":"rgba(253,180,98,0.55)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"MARA GABRILLI","legendgroup":"MARA GABRILLI","showlegend":true,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"h","width":0.9,"base":0,"x":[457],"y":[4],"text":"Casa: Senado <br>Número de tweets: 360 <br>Número de retweets: 97","type":"bar","marker":{"autocolorscale":false,"color":"rgba(179,222,105,0.55)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"PAULO ROCHA","legendgroup":"PAULO ROCHA","showlegend":true,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"h","width":0.9,"base":0,"x":[486],"y":[6],"text":"Casa: Senado <br>Número de tweets: 344 <br>Número de retweets: 142","type":"bar","marker":{"autocolorscale":false,"color":"rgba(252,205,229,0.55)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"PLÍNIO VALÉRIO","legendgroup":"PLÍNIO VALÉRIO","showlegend":true,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"h","width":0.9,"base":0,"x":[324],"y":[2],"text":"Casa: Senado <br>Número de tweets: 265 <br>Número de retweets: 59","type":"bar","marker":{"autocolorscale":false,"color":"rgba(217,217,217,0.55)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"SORAYA THRONICKE","legendgroup":"SORAYA THRONICKE","showlegend":true,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"h","width":0.9,"base":0,"x":[457],"y":[5],"text":"Casa: Senado <br>Número de tweets: 195 <br>Número de retweets: 262","type":"bar","marker":{"autocolorscale":false,"color":"rgba(188,128,189,0.55)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"VANDERLAN CARDOSO","legendgroup":"VANDERLAN CARDOSO","showlegend":true,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","frame":null}],"layout":{"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-100,2100],"tickmode":"array","ticktext":["0","500","1000","1500","2000"],"tickvals":[0,500,1000,1500,2000],"categoryorder":"array","categoryarray":["0","500","1000","1500","2000"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","hoverformat":".2f"},"xaxis2":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-50,1050],"tickmode":"array","ticktext":["0","250","500","750","1000"],"tickvals":[0,250,500,750,1000],"categoryorder":"array","categoryarray":["0","250","500","750","1000"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y2","hoverformat":".2f"},"yaxis2":{"domain":[0,0.48],"automargin":true,"type":"linear","autorange":false,"range":[0.4,10.6],"tickmode":"array","ticktext":["MARA GABRILLI","SORAYA THRONICKE","CARLOS VIANA","PAULO ROCHA","VANDERLAN CARDOSO","PLÍNIO VALÉRIO","LASIER MARTINS","JORGE KAJURU","ALVARO DIAS","HUMBERTO COSTA"],"tickvals":[1,2,3,4,5,6,7,8,9,10],"categoryorder":"array","categoryarray":["MARA GABRILLI","SORAYA THRONICKE","CARLOS VIANA","PAULO ROCHA","VANDERLAN CARDOSO","PLÍNIO VALÉRIO","LASIER MARTINS","JORGE KAJURU","ALVARO DIAS","HUMBERTO COSTA"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x2","hoverformat":".2f"},"yaxis":{"domain":[0.52,1],"automargin":true,"type":"linear","autorange":false,"range":[0.4,10.6],"tickmode":"array","ticktext":["ROGÉRIO CORREIA","BIA KICIS","MARCELO FREIXO","ALEXANDRE FROTA","CARLA ZAMBELLI","JOSÉ GUIMARÃES","JOSÉ MEDEIROS","MÁRCIO JERRY","MARGARIDA SALOMÃO","BACELAR"],"tickvals":[1,2,3,4,5,6,7,8,9,10],"categoryorder":"array","categoryarray":["ROGÉRIO CORREIA","BIA KICIS","MARCELO FREIXO","ALEXANDRE FROTA","CARLA ZAMBELLI","JOSÉ GUIMARÃES","JOSÉ MEDEIROS","MÁRCIO JERRY","MARGARIDA SALOMÃO","BACELAR"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","hoverformat":".2f"},"annotations":[],"shapes":[{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0.52,"y1":1},{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":0.48}],"images":[],"margin":{"t":26.2283105022831,"r":7.30593607305936,"b":40.1826484018265,"l":124.931506849315},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"showlegend":true,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"y":1},"hovermode":"closest","barmode":"relative"},"attrs":{"db079c3d53":{"x":{},"y":{},"fill":{},"alpha":{},"text":{},"type":"bar"},"db023bb525e":{"x":{},"y":{},"fill":{},"alpha":{},"text":{},"type":"bar"}},"source":"A","config":{"doubleClick":"reset","showSendToCloud":false},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"subplot":true,"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<p>Quanto aos parlamentares, foi possível perceber que o deputado Bacelar (PODE) mostra-se muito mais ativo no Twitter, não somente em relação aos seus pares, mas também aos senadores. Já no Senado, Álvaro Dias (PODE), Humberto Costa (PT) e Jorge Kajuru (PSB) são aqueles que não param de <em>tweetar</em>.</p>
+</div>
+<div id="o-espectro-politico-impacta-no-engajamento-gerado-pelos-partidos" class="section level3">
+<h3>4 — O espectro político impacta no engajamento gerado pelos partidos?</h3>
+<p>Para responder esta pergunta, é necessário entender onde cada partido político se localiza no espectro político. Dada a subjetividade desta avaliação, adotou-se o modo como os próprios partidos se descrevem e não a atuação de seus parlamentares, gerando três grandes grupos de partidos: esquerda, centro e direita. Considerando a diferença no número de partidos e de parlamentares em cada um desses grupos, decidiu-se utilizar o engajamento mediano como métrica da análise, sendo este engajamento a soma do número de <em>likes</em> e de <em>retweets</em> recebidos pelos parlamentares. Além disso, por questões de visualização, adotou-se uma escala logarítmica.</p>
+<pre class="r"><code>parlamentares_com_tt &lt;- parlamentares_com_tt %&gt;%
+  mutate(posicionamento = case_when(
+    partido %in% centro ~ &quot;Centro&quot;,
+    partido %in% esquerda ~ &quot;Esquerda&quot;,
+    partido %in% direita ~ &quot;Direita&quot;,
+    TRUE ~ NA_character_)
+  ) %&gt;%
+  mutate(ordem_posicionamento = case_when(
+    posicionamento == &quot;Esquerda&quot; ~ 1, 
+    posicionamento == &quot;Centro&quot; ~ 2,
+    posicionamento == &quot;Direita&quot; ~ 3)
+  )
+
+parlamentares_com_tt %&gt;%
+  filter(!is.na(posicionamento)) %&gt;%
+    ggplot(aes(x = reorder(posicionamento, ordem_posicionamento), y = engaj_mediano, color = posicionamento)) +
+    geom_boxplot(coef = 1000, show.legend = FALSE) +
+    geom_quasirandom(alpha = .3, show.legend = FALSE) +
+    labs(x = &quot;Posicionamento político&quot;, y = &quot;Engajamento mediano (em log10)&quot;) +
+    scale_colour_manual(values = c(&quot;slateblue1&quot;, &quot;steelblue1&quot;, &quot;firebrick&quot;)) +
+    scale_y_log10()</code></pre>
+<p><img src="Parlamentares_no_Twitter__Como_pia_o_Congresso_Nacional__files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>Os três grandes grupos do espectro político apresentaram características bem peculiares. Excetuando-se alguns poucos parlamentares, os partidos centristas tem resultados bem inferiores aos demais quanto ao engajamento gerado via Twitter, o que não chega a surpreender dado o nosso cenário político. Já a esquerda conta com a maior das medianas encontradas e engajamentos mais homogêneos entre seus parlamentares. Por fim, a direita conta com valores mais dispersos, mas também com os parlamentares que geram os maiores engajamentos.</p>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
